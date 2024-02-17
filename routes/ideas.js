@@ -53,12 +53,12 @@ router.post('/', ensureAuthenticated, (req, res) => {
   }
 
   if(errors.length > 0){
-    res.render('/add', {
+    return res.render('/add', {
       errors: errors,
       title: req.body.title,
       details: req.body.details
     });
-  } else {
+  }
     const newUser = {
       title: req.body.title,
       details: req.body.details,
@@ -68,9 +68,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
       .save()
       .then(idea => {
         req.flash('success_msg', 'Task added to the list');
-        res.redirect('/ideas');
+        return res.redirect('/ideas');
       })
-  }
 });
 
 // Edit Form process
